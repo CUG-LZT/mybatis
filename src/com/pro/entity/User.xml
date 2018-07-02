@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+      sql语句配置文件的位置
+		源码包下-mybatis-3-mybatis-3.4.6\src\test\java\org\apache\ibatis\submitted\complex_property
+-->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 项目中每一个sql的id都不能重名，利用namespace加以区分 -->
+<mapper namespace="User"> 
+
+  <!-- type ： 类的完整地址 -->
+  <!-- id ：  resultMap的唯一的标识-->
+  <resultMap type="com.pro.entity.User" id="UserResult">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <!-- column ： 数据的列名 -->
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="password" jdbcType="VARCHAR" property="password"/>  <!-- password.encrypted -->
+    <result column="role" jdbcType="VARCHAR" property="role"/>
+  </resultMap>
+
+  <!-- id : sql语句一个唯一名称  在DAO层sqlSession调用sql语句的查找依据-->
+  <!-- parameterType : 参数类型 -->
+  <!-- resultMap :  此条sql操作的表的列与哪一个实体的对象关联是通过这个参数去找-->
+  <!-- SQL语句中的是表名，并且区分大小写，在查询之后通过resultMap参数去对应的设置实体的信息 -->
+  <select id="queryUserList"  resultMap="UserResult">
+    SELECT * FROM USER WHERE 1=1                        
+  </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+	核心配置文件的位置
+		源码包下-mybatis-3-mybatis-3.4.6\src\test\java\org\apache\ibatis\submitted\complex_property
+-->
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+ <!--  <settings>
+    <setting name="useGeneratedKeys" value="false"/>
+    <setting name="useColumnLabel" value="true"/>
+  </settings>
+
+  <typeAliases>
+    <typeAlias alias="UserAlias" type="org.apache.ibatis.submitted.complex_property.User"/>
+  </typeAliases> -->
+
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC">
+        <property name="" value=""/>
+      </transactionManager>
+      <dataSource type="UNPOOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+      </dataSource>
+    </environment>
+  </environments>
+
+  <mappers>
+    <mapper resource="com/pro/entity/User.xml"/>
+  </mappers>
+ 
+</configuration>
