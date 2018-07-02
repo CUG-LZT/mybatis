@@ -21,11 +21,17 @@
   </resultMap>
 
   <!-- id : sql语句一个唯一名称  在DAO层sqlSession调用sql语句的查找依据-->
-  <!-- parameterType : 参数类型 -->
+  <!-- parameterType : 参数类型,只用写参数类型，并且只能有一个参数 -->
   <!-- resultMap :  此条sql操作的表的列与哪一个实体的对象关联是通过这个参数去找-->
   <!-- SQL语句中的是表名，并且区分大小写，在查询之后通过resultMap参数去对应的设置实体的信息 -->
-  <select id="queryUserList"  resultMap="UserResult">
-    SELECT * FROM USER WHERE 1=1                        
+  <!-- 一般不用selsect * 以为写* sql底层任然要解析*，会浪费时间和资源 -->
+  <!-- 拼接sql语句用到的是OGNL表达式 -->
+  <select id="queryUserList" parameterType="com.pro.entity.User" resultMap="UserResult">
+    SELECT * FROM USER WHERE 1=1
+    <!-- &quot;  是" -->
+    <if test="username != null and  !&quot;&quot;.equals(username.trim())"> and username=#{username} </if>
+    <!-- 第二个是模糊查询 -->
+    <if test="role != null and  !&quot;&quot;.equals(role.trim())"> and role like '%' #{role} '%' </if> 
   </select>
 
 </mapper>
