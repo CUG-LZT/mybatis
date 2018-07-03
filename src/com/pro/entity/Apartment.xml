@@ -13,23 +13,42 @@
   <!-- type ： 类的完整地址 -->
   <!-- id ：  resultMap的唯一的标识-->
   <resultMap type="com.pro.entity.Apartment" id="ApartmentResult">
-    <id column="id" jdbcType="INTEGER" property="id"/>
-    <!-- column ： 数据的列名 -->
+    <!-- column ： 数据的列名； 指的是sql语句中选择的比如下面有sql语句选择是的是a.id  -->
+    <!-- 但是a.id不能配置在这里所以下面的a.id还需要一个别名来区分sql语句中的两个id -->
+    <id column="a_id" jdbcType="INTEGER" property="id"/>
     <result column="apart_name" jdbcType="VARCHAR" property="apart_name"/>
     <result column="apart_number" jdbcType="VARCHAR" property="apart_number"/>
     <!-- resultMap为引用具体包含的对象是如何和数据库对应的，这里采用命名空间+id -->
+    <!-- property主表中实体类给字表的变量名 -->
+    <!-- collection查询主表关联字表查询 -->
     <collection property="userlist" resultMap="User.UserResult">
     </collection> 
   </resultMap>
 
 
+<!-- User.xml中的写法
 <select id="queryApartmentList" parameterType="com.pro.entity.Apartment" resultMap="ApartmentResult">
-    SELECT a.id, a.apart_name, a.apart_number, u.id, u.username, u.password, u.role 
-    FROM Apartment a left join USER u on a.id=u.apart_id WHERE 1=1
-    <!-- &quot;  是" -->
+    SELECT a.id a_id, a.apart_name, a.apart_number, u.id, u.username, u.password, u.role, u.apart_id
+    FROM Apartment a left join USER u on a.apart_number = u.apart_id WHERE 1=1
+    &quot;  是 "
     <if test="apart_name != null and  !&quot;&quot;.equals(apart_name.trim())"> and a.apart_name=#{apart_name} </if>
-    <!-- 第二个是模糊查询 -->
-    <if test="apart_number != null and  !&quot;&quot;.equals(apart_number.trim())"> and a.apart_number like '%' #{apart_number} '%' </if> 
-  </select>
+    第二个是模糊查询
+    <if test="apart_number != 0"> and a.apart_number = #{apart_number} </if> 
+</select> -->
+
+<!-- 更好的写法 -->
+<select id="queryApartmentList" parameterType="com.pro.entity.Apartment" resultMap="ApartmentResult">
+    SELECT a.id a_id, a.apart_name, a.apart_number, u.id, u.username, u.password, u.role, u.apart_id
+    FROM Apartment a left join USER u on a.apart_number = u.apart_id
+    <!-- where标签：输出where关键字，不需要再加上 where 1=1了 -->
+    <!-- 并且当拼接的条件最前面的一条的and或者or去掉 -->
+    <where>
+    	<if test="apart_name != null and  !&quot;&quot;.equals(apart_name.trim())"> and a.apart_name=#{apart_name} </if>
+    	<if test="apart_number != 0"> and a.apart_number = #{apart_number} </if>
+    </where>
+</select>
+
+<!-- 其他标签见readme.txt -->
+
 
 </mapper>

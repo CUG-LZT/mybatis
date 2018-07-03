@@ -23,7 +23,7 @@
 
   <!-- id : sql语句一个唯一名称  在DAO层sqlSession调用sql语句的查找依据-->
   <!-- parameterType : 参数类型,只用写参数类型，并且只能有一个参数 -->
-  <!-- resultMap :  此条sql操作的表的列与哪一个实体的对象关联是通过这个参数去找-->
+  <!-- resultMap :  此条sql操作的表的列与哪一个实体的对象关联是通过这个参数去找；要去找id为UserResult的resultMap标签-->
   <!-- SQL语句中的是表名，并且区分大小写，在查询之后通过resultMap参数去对应的设置实体的信息;与上面的id相对应 -->
   <!-- 一般不用selsect * 以为写* sql底层任然要解析*，会浪费时间和资源 -->
   <!-- 拼接sql语句用到的是OGNL表达式 -->

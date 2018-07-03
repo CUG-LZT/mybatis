@@ -16,3 +16,67 @@ servlet配置为action的形式：
 		
 增删改 和 查询不一样 是需要修改数据库的，mybatis是不默认提交事物的，所以这里需要手动提交
 			sqlSession.commit();
+			
+			
+xml配置文件中的标签：
+		<!-- 常用的其他标签 -->
+		<!-- 相当于定义常亮，再上面的sql语句中可以引用 -->
+		<!-- 比如要查询下面的三个的话可以写    select <include refid="columns"> from USER-->
+		<sql id = "columns">ID,USERNAME,PASSWORD</sql>
+		
+		<!-- 代替原来的set关键字 -->
+		<set></set>
+		
+		<!-- 例如下面的语句也是两个值，当只有两个参数都和会规范才更新，否则不更新改字段下面的写法就有问题 -->
+		<update id="">
+			update USER set PASSWORD=#{password}, USERNAME=#{username}
+		</update>
+		
+		<!-- 应该如下 -->
+		<!-- <set>标签会加上set关键字和去掉最后一个逗号 -->
+		<update id="">
+			update USER 
+			<set>
+				<if test="password != null and  !&quot;&quot;.equals(password.trim())"> 
+					PASSWORD=#{password},
+				</if>
+		    	<if test="username != null and  !&quot;&quot;.equals(username.trim())"> 
+		 			USERNAME = #{username},
+		 		</if>
+			</set>
+		</update>
+		
+		<!-- 可以代替where或者是set标签 -->
+		<!-- 当里面的if满足条件时会加上prefix的值，这里就是加上where -->
+		<!-- 当里面的if满足条件时会在后面加上suffix的值，这里就是加上test -->
+		<!-- 当里面的if满足条件时删除最前面prefixOverrides的值，这里就是and或者or -->
+		<!-- 当里面的if满足条件时删除最前面suffixOverrides的值，这里就是, -->
+		
+		<!-- 只要 prefix="where"和prefixOverrides="and/or" 就是where标签 -->
+		<!-- 只要 suffix="test" 和 suffixOverrides="," 就是set标签 -->
+		<trim prefix="where" suffix="test" prefixOverrides="and/or" suffixOverrides=",">
+		
+		</trim>
+		
+		<!--下面的相当于 if elseif  else  -->
+		<choose>
+			<when test="">
+			</when>
+			<when test="">
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		
+		
+		<!-- collection查询主表关联子表查询 -->
+	    <collection property="userlist" resultMap="User.UserResult">
+	    </collection> 
+	    
+	    <!-- association查询子表关联主表查询 -->
+	    <!-- property子表中实体类给主表的变量名 （也是实体类）-->
+	    <!-- resultMap为引用具体包含的对象是如何和数据库对应的，这里采用命名空间+id -->
+	    <association property="apartment" resultMap="User.UserResult">
+	    </association> 
+
+	    

@@ -5,7 +5,7 @@ import java.util.List;
 public class Apartment {
 	private int id;
 	private String apart_name;
-	private String apart_number;
+	private int apart_number;
 	private List<User> userlist;
 	
 	public List<User> getUserlist() {
@@ -19,7 +19,7 @@ public class Apartment {
 		return "Apartment [id=" + id + ", apart_name=" + apart_name + ", apart_number=" + apart_number + ", userlist="
 				+ userlist + "]";
 	}
-	public Apartment(int id, String apart_name, String apart_number) {
+	public Apartment(int id, String apart_name, int apart_number) {
 		this.id = id;
 		this.apart_name = apart_name;
 		this.apart_number = apart_number;
@@ -39,10 +39,10 @@ public class Apartment {
 	public void setApart_name(String apart_name) {
 		this.apart_name = apart_name;
 	}
-	public String getApart_number() {
+	public int getApart_number() {
 		return apart_number;
 	}
-	public void setApart_number(String apart_number) {
+	public void setApart_number(int apart_number) {
 		this.apart_number = apart_number;
 	}
 	
