@@ -6,10 +6,21 @@ public class User {
 	private String username;
 	private String password;
 	private String role;
+	private int apart_id;
 	
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + ", apart_id="
+				+ apart_id + "]";
+	}
+
+	public int getApart_id() {
+		return apart_id;
+	}
+
+	public void setApart_id(int apart_id) {
+		this.apart_id = apart_id;
 	}
 
 	public User() {
