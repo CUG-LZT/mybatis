@@ -1,0 +1,11 @@
+log4j文档的解释：
+
+log4j.rootLogger=ERROR, stdout
+
+log4j.appender.Console=org.log4j.ConsoleAppender
+
+log4j.appender.Console.Layout=org.log4j.PatternLayout
+
+log4j.appender.Console.Layout.ConversionPattern=%d [%t]-5p [%c] - %m%n
+
+log4j.logger.org.apache=INFO
