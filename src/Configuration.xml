@@ -33,6 +33,7 @@
 
   <mappers>
     <mapper resource="com/pro/entity/User.xml"/>
+    <mapper resource="com/pro/entity/Apartment.xml"/>
   </mappers>
  
 </configuration>
