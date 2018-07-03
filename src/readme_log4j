@@ -1,11 +1,30 @@
 log4j文档的解释：
+都是键值对的形式 key=value
 
-log4j.rootLogger=ERROR, stdout
+配置输出日志的时候，输出的级别和位置;使用方法：
+	Logger log;
+	log.debug("");
+	log.info("");
+	log.warn("");
+	log.error("");
+	
+为整个工程配置的输出大于等于设置的级别的信息都会输出
+log4j.rootLogger=DEBUG,Console
 
+第一个值得第二个参数是可以随便更换的 只是下面的三个也要跟着改变，这个参数是确定输出位置的
 log4j.appender.Console=org.log4j.ConsoleAppender
 
+布局：可以按照自己的想法输出
 log4j.appender.Console.Layout=org.log4j.PatternLayout
 
-log4j.appender.Console.Layout.ConversionPattern=%d [%t]-5p [%c] - %m%n
+自定义输出内容的格式：
+%d---时间
+[%t]---所处于的线程的名称 
+%-5p---输出的日志的级别 5表示输出字符至少为5位 不足空个补齐 符号表示空格在右边 
+[%c]---输出日志的类的全名 
+-%m---输出的时候附加的信息
+%n---换行
+log4j.appender.Console.Layout.ConversionPattern=%d [%t] %-5p [%c] -%m%n
 
+为特定的包确定输出级别--org.apache
 log4j.logger.org.apache=INFO

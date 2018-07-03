@@ -1,0 +1,18 @@
+添加mybiatis源码操作
+	1.下载源码
+	2.导入jar
+	3.右击项目，build path 下的libraries
+	4.点开，选择源码，点击编辑，将源码的位置拷贝输入即可
+	
+
+
+servlet配置为action的形式：
+	1.servlet-name -------servlet的名字（类名）
+		servlet-class-----servlet类的包名加类名
+	2.servlet-name -------servlet的名字（类名）
+		url-pattren-------这写的是什么，访问地址就是什么
+		
+		
+		
+增删改 和 查询不一样 是需要修改数据库的，mybatis是不默认提交事物的，所以这里需要手动提交
+			sqlSession.commit();

@@ -38,4 +38,50 @@ public class UserDAO {
 		
 		return userlist;
 	}
+	
+	/**
+	 * 删除一个
+	 * @param id
+	 */
+public void deleteOne(int id){
+		DBaccess dBaccess = new DBaccess();
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = dBaccess.getSqlSession();
+			//通过实体配置文件的命名空间和sql的id；sqlSession执行sql语句
+			sqlSession.delete("User.deleteOne",id);
+			//增删改 和 查询不一样 是需要修改数据库的，mybatis是不默认提交事物的，所以这里需要手动提交
+			sqlSession.commit();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			if(sqlSession != null)
+				sqlSession.close();
+		}
+	}
+
+/**
+ * @param ids
+ * 多条删除
+ */
+public void deleteBatch(List<Integer> ids){
+		DBaccess dBaccess = new DBaccess();
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = dBaccess.getSqlSession();
+			//通过实体配置文件的命名空间和sql的id；sqlSession执行sql语句
+			sqlSession.delete("User.deleteBatch",ids);
+			//增删改 和 查询不一样 是需要修改数据库的，mybatis是不默认提交事物的，所以这里需要手动提交
+			sqlSession.commit();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			if(sqlSession != null)
+				sqlSession.close();
+		}
+	}
+
+
 }
