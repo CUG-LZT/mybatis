@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+      sql语句配置文件的位置
+		源码包下-mybatis-3-mybatis-3.4.6\src\test\java\org\apache\ibatis\submitted\complex_property
+-->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 项目中每一个sql的id都不能重名，利用namespace加以区分 -->
+<mapper namespace="Apartment"> 
+
+  <!-- type ： 类的完整地址 -->
+  <!-- id ：  resultMap的唯一的标识-->
+  <resultMap type="com.pro.entity.Apartment" id="ApartmentResult">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <!-- column ： 数据的列名 -->
+    <result column="apart_name" jdbcType="VARCHAR" property="apart_name"/>
+    <result column="apart_number" jdbcType="VARCHAR" property="apart_number"/>
+    <!-- resultMap为引用具体包含的对象是如何和数据库对应的，这里采用命名空间+id -->
+    <collection property="userlist" resultMap="User.UserResult">
+    </collection> 
+  </resultMap>
+
+
+<select id="queryApartmentList" parameterType="com.pro.entity.Apartment" resultMap="ApartmentResult">
+    SELECT a.id, a.apart_name, a.apart_number, u.id, u.username, u.password, u.role 
+    FROM Apartment a left join USER u on a.id=u.apart_id WHERE 1=1
+    <!-- &quot;  是" -->
+    <if test="apart_name != null and  !&quot;&quot;.equals(apart_name.trim())"> and a.apart_name=#{apart_name} </if>
+    <!-- 第二个是模糊查询 -->
+    <if test="apart_number != null and  !&quot;&quot;.equals(apart_number.trim())"> and a.apart_number like '%' #{apart_number} '%' </if> 
+  </select>
+
+</mapper>
