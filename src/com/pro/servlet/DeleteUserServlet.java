@@ -21,13 +21,13 @@ import com.pro.uilts.JsonTools;
  * Servlet implementation class UserAction
  */
 @WebServlet("/useraction.action")
-public class UserAction extends HttpServlet {
+public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserAction() {
+    public DeleteUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,13 +39,13 @@ public class UserAction extends HttpServlet {
 		// TODO Auto-generated method stub
 		// 设置编码
 		request.setCharacterEncoding("UTF-8");
-		
-		// 接受页面的值
-		String id = request.getParameter("id");
-		String action = request.getParameter("action");
-		//调用service层获得数据
-		MaintainService maintainService  = new MaintainService();
-		maintainService.deleteOne(Integer.parseInt(id));
+		if(request.getParameter("action").equals("delelist")){
+			// 接受页面的值
+			String[] ids = request.getParameterValues("ids");
+			//调用service层进行操作--servlet不进行任何操作只进行传值，其他的事情有业务层
+			MaintainService maintainService = new MaintainService();
+			maintainService.deleteBatch(ids);
+		}
 	}
 
 	/**

@@ -24,7 +24,7 @@ public class Test {
 		 
 		/*List<Integer> ids = new ArrayList<Integer>();
 		ids.add(2);
-		ids.add(4);
+		ids.add(4); 
 		MaintainService maintainService = new MaintainService();
 		maintainService.deleteBatch(ids);*/
 		

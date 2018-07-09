@@ -22,23 +22,29 @@
 				role: $('#role').val()
 			});
 		}
-		function dodelete(){
-			$.ajax({
-				type : "POST",
-				url : "http://localhost:8080/mybatis/useraction.action",
-				data : {
-					"id" : $('#id').val(),
-					"action" : "deleteone"
-				},
-				dataType : "json",
-				success : function(data) {
-					alert("删除成功");
-					$('#tt').datagrid('load',{});
-				},
-				error : function(err) {
-					alert("error!");
-				}
-			});
+		function delelist(){
+			var selectlist = [];
+			var rows = $('#tt').datagrid('getSelections');
+			for (var i = 0; i < rows.length; i++) {
+				selectlist[i] = rows[i].id;
+			}
+			  $.ajax({
+					type : "POST",
+					url : "http://localhost:8080/mybatis/useraction.action",
+					data : {
+						"ids" : selectlist,
+						"action" : "delelist"
+					},
+					dataType : "json",
+					traditional: true,//属性在这里设置
+					success : function(data) {
+						alert("删除成功");
+						$('#tt').datagrid('load',{});
+					},
+					error : function(err) {
+						alert("error!");
+					}
+				}); 
 		}
 	</script>
 <title>Insert title here</title>
@@ -50,10 +56,10 @@
 		<a href="ypage.jsp" class="easyui-linkbutton" plain="true">一对多、多对一展示</a>
 	</div>
 	<hr/>
-	<table id="tt" class="easyui-datagrid" style="width:700px;height:500px;"
+	<table id="tt" class="easyui-datagrid" style="width:570px;height:500px;"
 			url="http://localhost:8080/mybatis/getuser.action"
 			title="Searching" iconCls="icon-search" toolbar="#tb"
-			rownumbers="false" pagination="false" singleSelect="true" fitColumns="false" showFooter="false" >
+			rownumbers="false" pagination="false" fitColumns="false" showFooter="false" >
 		<thead>
 			<tr>
 				<th field="id" width="80" align="center">ID</th>
@@ -70,9 +76,8 @@
 		<span>role:</span>
 		<input id="role" style="line-height:26px;border:1px solid #ccc;width:100px">
 		<a href="#" class="easyui-linkbutton" plain="true" onclick="doSearch()">Search</a>
-		<span>id:</span>
-		<input id="id" style="line-height:26px;border:1px solid #ccc;width:100px">
-		<a href="#" class="easyui-linkbutton" plain="true" onclick="dodelete()">delete</a>
+		
+		<a href="#" class="easyui-linkbutton" plain="true" onclick="delelist()">delelist</a>
 	</div>
 </body>
 </html>
