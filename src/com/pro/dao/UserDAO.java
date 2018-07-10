@@ -2,11 +2,14 @@ package com.pro.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.pro.db.DBaccess;
+import com.pro.entity.Page;
 import com.pro.entity.User;
 
 /**
@@ -23,11 +26,11 @@ public class UserDAO {
 		User user = new User();
 		user.setUsername(username);
 		user.setRole(role);
+		Map<String, Object> param  = new HashMap<String, Object>();
 		try {
 			sqlSession = dBaccess.getSqlSession();
 			//通过实体配置文件的命名空间和sql的id；sqlSession执行sql语句
 			userlist = sqlSession.selectList("User.queryUserList",user);
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,6 +40,47 @@ public class UserDAO {
 		}
 		
 		return userlist;
+	}
+	
+	//分页
+	public Map<String, Object> queryUserList(String username,String role,String page,String rows){
+		Map<String, Object> resultmap = new HashMap<String, Object>();
+		int total = 0;
+		
+		Page pa = new Page();
+		pa.setIndex((Integer.parseInt(page)-1) * Integer.parseInt(rows));
+		pa.setPagenumber(Integer.parseInt(rows));
+		
+		DBaccess dBaccess = new DBaccess();
+		SqlSession sqlSession = null;
+		List<User> userlist = new ArrayList<User>();
+		//因为mybatis只允许传递一个参数，所以用对象类型去封装两个参数
+		User user = new User();
+		user.setUsername(username);
+		user.setRole(role);
+		
+		Map<String, Object> param  = new HashMap<String, Object>();
+		param.put("pa", pa);
+		param.put("user", user);
+		try {
+			sqlSession = dBaccess.getSqlSession();
+			//通过实体配置文件的命名空间和sql的id；sqlSession执行sql语句
+			userlist = sqlSession.selectList("User.queryUserListBypage",param);
+
+			/*IMessage imessage = sqlSession.getMapper(IMessage.class);
+			result = imessage.count(message);*/
+			total = sqlSession.selectList("User.queryTotal",user).size();
+					
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			if(sqlSession != null)
+				sqlSession.close();
+		}
+		resultmap.put("list", userlist);
+		resultmap.put("total", total);
+		return resultmap;
 	}
 	
 	/**

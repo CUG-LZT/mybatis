@@ -35,6 +35,24 @@
     <if test="role != null and  !&quot;&quot;.equals(role.trim())"> and role like '%' #{role} '%' </if> 
   </select>
   	
+  	<select id="queryUserListBypage" parameterType="java.util.Map" resultMap="UserResult">
+    SELECT * FROM USER WHERE 1=1
+    <!-- &quot;  是" -->
+    <if test="user.username != null and  !&quot;&quot;.equals(user.username.trim())"> and username=#{user.username} </if>
+    <!-- 第二个是模糊查询 -->
+    <if test="user.role != null and  !&quot;&quot;.equals(user.role.trim())"> and role like '%' #{user.role} '%' </if> 
+    order by ID limit #{pa.index},#{pa.pagenumber}
+  </select>
+  	
+  	<select id="queryTotal" parameterType="com.pro.entity.User" resultType="int">
+    select ID from USER WHERE 1=1 
+    <!-- &quot;  是" -->
+    <if test="username != null and  !&quot;&quot;.equals(username.trim())"> and username=#{username} </if>
+    <!-- 第二个是模糊查询 -->
+    <if test="role != null and  !&quot;&quot;.equals(role.trim())"> and role like '%' #{role} '%' </if> 
+  </select>
+  	
+  	
   <delete id="deleteOne" parameterType="int">
   	delete from user where id = #{_parameter}
   </delete>

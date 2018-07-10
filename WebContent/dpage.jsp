@@ -58,9 +58,9 @@
 	<hr/>
 	
 	<table id="tt" class="easyui-datagrid" style="width:570px;height:500px;"
-			url="http://localhost:8080/mybatis/getuser.action"
+			url="http://localhost:8080/mybatis/getUserByPage.action"
 			title="Searching" iconCls="icon-search" toolbar="#tb"
-			rownumbers="false" pagination="false" fitColumns="false" showFooter="false" >
+			rownumbers="false" pagination="true" pagination="false" fitColumns="false" showFooter="false" >
 		<thead>
 			<tr>
 				<th field="id" width="80" align="center">ID</th>

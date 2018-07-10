@@ -16,69 +16,46 @@
 	<script type="text/javascript" src="js/framejs/jquery-easyui-1.3.2/locale/easyui-lang-zh_CN.js"></script>
 
 	<script type="text/javascript">
-		function doSearch(){
+		 function doSearch(){
 			$('#tt').datagrid('load',{
-				username: $('#username').val(),
-				role: $('#role').val()
+				apart_name: $('#apart_name').val(),
+				apart_number: $('#apart_number').val()
 			});
 		}
-		function delelist(){
-			var selectlist = [];
-			var rows = $('#tt').datagrid('getSelections');
-			for (var i = 0; i < rows.length; i++) {
-				selectlist[i] = rows[i].id;
-			}
-			  $.ajax({
-					type : "POST",
-					url : "http://localhost:8080/mybatis/useraction.action",
-					data : {
-						"ids" : selectlist,
-						"action" : "delelist"
-					},
-					dataType : "json",
-					traditional: true,//属性在这里设置
-					success : function(data) {
-						alert("删除成功");
-						$('#tt').datagrid('load',{});
-					},
-					error : function(err) {
-						alert("error!");
-					}
-				}); 
-		}
+		
 	</script>
 <title>Insert title here</title>
 </head>
 <body>
 	<div style="width:100%;">
-			<a href="index.jsp" class="easyui-linkbutton" plain="true" style="float:left">无分页展示</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="index.jsp" class="easyui-linkbutton" plain="true" style="float:left">无分页展示</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="dpage.jsp" class="easyui-linkbutton" plain="true">分页展示</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="ypage.jsp" class="easyui-linkbutton" plain="true">一对多、多对一展示</a>
 	</div>
 	<hr/>
+	<p>通过一对多的关系，将部门和用户关联了起来，但是展示的时候去掉了部门信息！</p>
+	<hr/>
 	
-	<table id="tt" class="easyui-datagrid" style="width:570px;height:500px;"
-			url="http://localhost:8080/mybatis/getuser.action"
+	<table id="tt" class="easyui-datagrid" style="width:630px;height:470px;"
+			url="http://localhost:8080/mybatis/getUserByApartmentServlet.action"
 			title="Searching" iconCls="icon-search" toolbar="#tb"
 			rownumbers="false" pagination="false" fitColumns="false" showFooter="false" >
 		<thead>
 			<tr>
-				<th field="id" width="80" align="center">ID</th>
+				<th field="id" width="120"  align="center">userid</th>
 				<th field="username" width="120" align="center">username</th>
-				<th field="password" width="120"  align="center">password</th>
-				<th field="role" width="120"  align="center">role</th>
-				<th field="apart_id" width="120" align="center">apartment</th>
+				<th field="password" width="120" align="center">password</th>
+				<th field="role" width="120" align="center">role</th>
+				<th field="apart_id" width="120" align="center">apart_id</th>
 			</tr>
 		</thead>
 	</table>
 	<div id="tb" style="padding:3px">
-		<span>username:</span>
-		<input id="username" style="line-height:26px;border:1px solid #ccc;width:100px">
-		<span>role:</span>
-		<input id="role" style="line-height:26px;border:1px solid #ccc;width:100px">
+		<span>apart_name:</span>
+		<input id="apart_name" style="line-height:26px;border:1px solid #ccc;width:100px">
+		<span>apart_number:</span>
+		<input id="apart_number" style="line-height:26px;border:1px solid #ccc;width:100px">
 		<a href="#" class="easyui-linkbutton" plain="true" onclick="doSearch()">Search</a>
-		
-		<a href="#" class="easyui-linkbutton" plain="true" onclick="delelist()">delelist</a>
 	</div>
 	
 	

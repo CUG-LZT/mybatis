@@ -28,13 +28,15 @@ public class Test {
 		MaintainService maintainService = new MaintainService();
 		maintainService.deleteBatch(ids);*/
 		
-		String apart_name = "部门1" ;
-		int apart_number = 0;
+		/*String apart_name = "部门1" ;
+		String apart_number = "";
 		ApartmentMaintainService apartmentMaintainService = new ApartmentMaintainService();
 		List<Apartment> apartmentlist = apartmentMaintainService.queryApartmentList(apart_name, apart_number);
 		
 		for (Apartment apartment : apartmentlist) {
 			System.out.println(apartment.toString());
-		}
+		}*/
+		
+		
 	}
 }
